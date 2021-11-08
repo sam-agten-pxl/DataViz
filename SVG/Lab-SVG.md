@@ -551,7 +551,6 @@ Er zijn een aantal zaken waar je hier voor moet oppassen:
 Probeer hier nu een paar stapjes in verder te gaan. 
 
 - Begin eens met het toevoegen van een `Eye` component die dan gebruikt wordt door de `Face` component die we gemaakt hebben.
-- Maak ook de `fill` property een property van `Face`.
-- Maak een rij van gezichtjes, allemaal met een andere afmeting en kleur. Bijvoorbeeld:
+- Maak een rij van gezichtjes, allemaal met een andere afmetingen en oogjes.
 
 
