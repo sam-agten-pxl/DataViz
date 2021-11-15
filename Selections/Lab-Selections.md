@@ -187,7 +187,7 @@ Met D3 hebben we dus een selectie kunnen uitvoeren van enkele DOM elemenen (circ
 
 D3 heeft twee functies om selecties te maken: `d3.select` en `d3.selectAll`. Met `select` selecteer je enkel het eerste element, met `selectAll` selecteer je alle overeenkomstige elementen. Het argument dat je meegeeft is van het type `string` en mag eender welke CSS `selector` zijn (bv: #my-chart, g:first-child, div.svg, etc.). 
 
-Buiten constante waardes mee te geven kunnen we dus ook functies meegeven. Hoewel we dat in bovenstaan voorbeeld niet gedaan hebben, hebben de functies die de waarde berekening typisch twee parameters: `d` en `i`. Bovenstaand voorbeeld hadden we dus beter herschreven als:
+Buiten constante waardes mee te geven kunnen we dus ook functies meegeven. Hoewel we dat in bovenstaand voorbeeld niet gedaan hebben, hebben de functies die de waarde berekening typisch twee parameters: `d` en `i`. Bovenstaand voorbeeld hadden we dus beter herschreven als:
 
     d3.selectAll('circle')
         .style('fill', 'orange')
