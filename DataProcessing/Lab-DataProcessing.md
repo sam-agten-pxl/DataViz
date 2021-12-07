@@ -33,7 +33,7 @@ Het inlezen van deze data is gelukkig poepsimpel. D3 voorziet een methode `csv` 
     },
     async mounted() {
         
-        const data = await d3.csv('/data/harry_potter.csv');
+        const data = await d3.csv('harry_potter.csv');
         console.log(data);
     }
     }
@@ -41,7 +41,7 @@ Het inlezen van deze data is gelukkig poepsimpel. D3 voorziet een methode `csv` 
 
 Start je app, open je console, en normaal gezien krijg je dat de data uit de file te zien in je console. Dat is goed nieuws want nu zit die data dus in een simpele array van objecten, zoals we gedaan hebben op het einde van het vorige lab. De code die deze magie veroorzaakt is dit:
 
-    const data = await d3.csv('/data/harry_potter.csv');
+    const data = await d3.csv('harry_potter.csv');
     console.log(data);
 
 We gebruiken het await keyword omdat de uitvoer van de `csv` methode async is. Het resultaat vangen we op in de variabele `data`. Ten slotte printen we het resultaat af. Belangrijk: merk op dat er nu een nieuw keyword staat bij onze `mounted()` functie: `await`. Elke keer als je async functions gebruikt in mounted moet je dat aangeven door de methode te markeren als `async`.
@@ -54,7 +54,7 @@ Bij dit lab zit ook een andere csv file: `movies.csv`. Elke film in die dataset 
 
 We laden eerste de csv file in:
 
-    const data = await d3.csv('/data/movies.csv');
+    const data = await d3.csv('movies.csv');
 
 Deze data is verre van perfect. Zo zien we bijvoorbeeld dat sommige budgetten ingegeven zijn als tekst (strings) en niet als getallen. De genres van de films zijn ook een json-object in tekstvorm.
 
@@ -66,7 +66,7 @@ Voordat we kunnen beginnen aan een visualisatie moeten we dus wat types omzetten
     },
     async mounted() {
         
-        const data = await d3.csv('/data/movies.csv', this.typeConversion);
+        const data = await d3.csv('movies.csv', this.typeConversion);
         console.log(data);
     },
     methods: {
@@ -112,7 +112,7 @@ Er zijn sommige films die geen genre hebben of een budget of revenue die 0 zijn.
 
 De functie pakt de volledige rij van objecten binnen en filtert die met behulp van de ingebouwde `filter` functie van javascript. Enkel objecten die voldoen aan de voorwaarde worden behouden. In dit geval zijn dat enkel objecten waarvan het budget en de revenue groter is dan 0, en waar het genre niet leeg is. We moeten deze functie nog oproepen nadat onze data is geprepareerd:
 
-    const data = await d3.csv('/data/movies.csv', this.typeConversion);
+    const data = await d3.csv('movies.csv', this.typeConversion);
     this.dataLoaded(data);
 
 Als je nu uitvoert zie je dat we overblijven met 3474 films.
@@ -166,7 +166,7 @@ We moeten deze functie nog oproepen. De volledige code ziet er dan zo uit:
     },
     async mounted() {
         
-        const data = await d3.csv('/data/movies.csv', this.typeConversion);
+        const data = await d3.csv('movies.csv', this.typeConversion);
         const filteredData = this.dataLoaded(data);
         const finishedData = this.prepareBarChart(filteredData);
         console.log(finishedData);
@@ -243,7 +243,7 @@ We breiden onze `mounted()` functie uit:
 
     async mounted() {
     
-        const data = await d3.csv('/data/movies.csv', this.typeConversion);
+        const data = await d3.csv('movies.csv', this.typeConversion);
         const filteredData = this.dataLoaded(data);
         const finishedData = this.prepareBarChart(filteredData);
         console.log(finishedData);
@@ -327,7 +327,7 @@ Hier is nog eens de volledige code:
     },
     async mounted() {
         
-        const data = await d3.csv('/data/movies.csv', this.typeConversion);
+        const data = await d3.csv('movies.csv', this.typeConversion);
         const filteredData = this.dataLoaded(data);
         const finishedData = this.prepareBarChart(filteredData);
         console.log(finishedData);
