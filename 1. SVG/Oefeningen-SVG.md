@@ -14,14 +14,27 @@ Voor deze oefening maak je de volgende simpele bar chart:
 
 Maak gebruik van het `rect` element, zie: https://www.w3schools.com/graphics/svg_rect.asp. Maak de bar chart eerst rechtstreeks in `App.vue`. Maak dan een `Bar` component en bouw de bar chart op met 4 van die `Bar` componenten. Zorg dat je voor elke bar de hoogte en de x-positie kan instellen.
 
-## 2. Polyline
+## 2. Bar chart 2
+
+Herhaal de vorige oefening, maar maak gebruik van een `v-for` lus. 
+
+<svg width = 800 height=110>
+    <rect width=20 height=100 x=0 fill=orange />
+    <rect width=20 height=80 x=30 y=20 fill=tomato />
+    <rect width=20 height=60 x=60 y=40 fill=orange />
+    <rect width=20 height=40 x=90 y=60 fill=tomato />
+</svg>
+
+De kleur van de rechthoeken is afwisselnd `orange` en `tomato`. De hoogtes zijn `100, 800, 60` en `40`.
+
+## 3. Polyline
 Met het SVG-element `polyline` kan je lijndiagrammes tekenen. Probeer met behulp van https://www.w3schools.com/graphics/svg_polyline.asp uit te zoeken hoe je onderstaande vorm kan namaken in html:
 
 <svg width = 800 height=130>
     <polyline points="1,105,50,30,100,75,120,50,180,105,0,105" style="fill:none; stroke:tomato; stroke-width:3" />
 </svg>
 
-## 3. Labels
+## 4. Labels
 SVG ondersteunt ook labels met behulp van SVG text (https://www.w3schools.com/graphics/svg_text.asp). Herneem oefening 1 en voeg labels toe elke bar:
 
 <svg width = 800 height=150>

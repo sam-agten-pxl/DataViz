@@ -1,15 +1,13 @@
-# SVG in HTML
-
-Dit lab is bedoelt om je bekend te maken met de basis van het gebruikt van SVG (Scalable Vector Graphics) in HTML. We maken ook meteen gebruik van Vue zodat we gebruik kunnen maken van componenten om onze SVG tekeningen uitbreidbaar te maken.
+# Kennismaking SVG en Vue
 
 ## 1. Klaarzetten Vue-project
-De details voor het opzetten van een Vue-project (en de nodige installaties) zien jullie in het vak Web-Expert, wij beperken ons hier tot de basis. Je vind ook meer informatie over het gebruik van Vue in VC code hierzo: https://code.visualstudio.com/docs/nodejs/vuejs-tutorial. Als je op zoek bent naar wat algemene informatie over Vue, dan raden we deze aan: https://vuejs.org/v2/guide/. Gebruik het 'create' commando om een nieuw project aan te maken. Dat project krijgt zijn eigen mapje. We raden aan om dit commando uit te voeren in een folder die je speciaal aanmaakt voor dit vak.
+De details voor het opzetten van een Vue-project (en de nodige installaties) zien jullie in het vak Web-Expert, wij beperken ons hier tot de basis. Je vind ook meer informatie over het gebruik van Vue in VC code hierzo: https://code.visualstudio.com/docs/nodejs/vuejs-tutorial. Als je op zoek bent naar wat algemene informatie over Vue, dan raden we deze aan: https://vuejs.org/guide/introduction.html. Gebruik het 'create' commando om een nieuw project aan te maken. Dat project krijgt zijn eigen mapje. We raden aan om dit commando uit te voeren in een folder die je speciaal aanmaakt voor dit vak.
 
-    vue create smiley-face
+    vue create first-svg
 
-Vergeet daarna ook niet te navigeren naar de folder die aangemaakt is zodat je in je project zit:
+Je kiest voor Vue 3. Vergeet daarna ook niet te navigeren naar de folder die aangemaakt is zodat je in je project zit:
 
-    cd smiley-face  
+    cd first-svg  
 
 Controleer eerst of je project werkt door vue te runnen. Dat kan je met het volgende commando:
 
@@ -33,8 +31,7 @@ Opnieuw laten we de basis van Vue over aan Web-Expert, maar hier is een snel ove
 - In Vue kunnen we eigen HTML-component definiëren. We noemen dat Vue componenten. In het bestand HelloWorld.vue kan je bekijken hoe het HelloWorld element er uitziet. We kunnen dus met andere woorden zelf nieuwe HTML elementen/snippets definiëren en die dan hergebruiken. 
 
 ### Snoeien
-
-Het HelloWorld componentje hebben we niet nodig. Verwijder het HelloWorld elementje uit de App component. Die ziet er dan als volgt uit:
+Het HelloWorld componentje hebben we niet nodig. Pas de App component aan zodat de html er als volgt uitziet:
 
     <template>
     <div id="app">
@@ -84,15 +81,13 @@ Als je nu je project opnieuw opstart krijg je enkel nog het Vue logo te zien. Da
 
 Als je het Vue project niet afgesloten had met CTRL+C dan zal de verandering ook live doorgevoerd worden op de website als je het bestandje opslaat. Dat noemen ze ook wel hot-reload of dynamic reloading. Je website zou er nu zo moeten uitzien:
 
-
-
 ![Hello Vue!](First-Vue.PNG)
 
 ## 2. SVG
 We kennen ondertussen het concept van Scalable Vector Graphics (SVG) van Illustrator. We weten dat die niet opgebouwd zijn uit statische pixels maar dat het eigenlijk berekeningen zijn op basis van primitieve vormen zoals rechthoeken, cirkels, etc. HTML 5 ondersteunt zelf ook het gebruik van SVG elementen. Je hebt dus in principe voor dit onderdeel geen Vue nodig, SVG elementen zitten standaard ingebakken in HTML. Als je bovenstaande niet gedaan hebt kan je hier meevolgen door zelf even een index.html bestandje aan te maken en rechtstreeks te werken in de body.
 
 ### Hello Circle
-We starten met een cirkel, want cirkels zijn hip. Vooraleer we een cirkel kunnen tekenen moeten we echte beginnen met aan HTML te laten weten dat we SVG elementen willen toevoegen. dat doen we door een SVG tag toe te voegen aan de body. Daaraan moeten we ook meteen een breedte en hoogte meegeven:
+We starten met een cirkel, want cirkels zijn hip. Vooraleer we een cirkel kunnen tekenen moeten we echter beginnen met aan HTML te laten weten dat we SVG elementen willen toevoegen. dat doen we door een SVG tag toe te voegen aan de body. Daaraan moeten we ook meteen een breedte en hoogte meegeven:
 
     <svg width=700 height=350>
     </svg>
@@ -137,7 +132,7 @@ Als je nu uitvoert krijg je je eerste zwarte cirkel! Hoezee!
 
 ### Meer cirkels!
 
-Breidt de bovenstaande code uit zodat je meer cirkels op je scherm krijgt. 
+Breid nu zelf de bovenstaande code uit zodat je meer cirkels op je scherm krijgt:
 
 <svg width=960 height=100>
     <circle cx=50 cy=50 fill=orange r=20 />
@@ -148,10 +143,10 @@ Breidt de bovenstaande code uit zodat je meer cirkels op je scherm krijgt.
 </svg>
 
 
-Maak gebruikt fan de `fill` eigenschap om de kleur van de cirkel te wijzigen.
+De bovenstaande code maakt gebruik van de `fill` eigenschap om de kleur van de cirkel te wijzigen.
 
 ### Het element `g`
-Een veelgebruikt element voor SVG graphics in HTML 5 is het`g` element, oftwel group element. Op zicht doet dat element niet veel, vergelijkbaar met het `div` element. We kunnen het gebruiken om zone SVG elementen te groeperen:
+Een veelgebruikt element voor SVG graphics in HTML 5 is het`g` element, oftwel group element. Op zicht doet dat element niet veel, vergelijkbaar met het `div` element. We kunnen het gebruiken om SVG elementen te groeperen:
 
     <svg width=700 height=350>
         <g>
@@ -170,6 +165,77 @@ Deze toevoeging zal niets veranderen aan je website. Maar nu kunnen we attribute
     </svg>
     
 Denk eraan dat ons 'canvas' maar 700 pixels breed is. Als je daar buitentreed zal je cirkel niet, of maar gedeeltelijk, zichtbaar zijn.
+
+### Nog meer cirkels!
+Uiteindelijk gaan we dit soort SVG elementen tekenen op basis van data die we inlezen. Als we exact weten hoeveel datapunten we moeten visualiseren kunnen we de cirkels dus zo handmatig toevoegen, maar dat is geen robuuste oplossing. Bovendien weten we op voorhand niet hoeveel datapunten er zullen zijn ofwel zijn die variabel. Het is dus nuttig om een arbitraire hoeveelheid cirkels te kunnen tekenen. Soms hebben we bijvoorbeeld 25 cirkels nodig, eentje voor elke student in de klas, of soms hebben we er misschien 200 nodig, eentje voor elke student in de richting.
+
+Daarvoor kunnen we gebruik maken van de Vue for-lus. Met de vue for-lus willen we typisch loopen over een array van data, maar die hebben we nu nog niet. Gelukkig kunnen we ook een Vue for-lus gebruiken voor een reeks getallen. Dat ziet er dan bijvoorbeeld zo uit:
+
+    <span v-for="n in 10">{{ n }}</span>
+
+Deze code zal Vue vertalen in HTML. Deze regel wordt dankzij de `v-for` 10 keer uitgevoerd (`n in 10`). N is de index. Die begint bij 1 en loopt op tot 10. Vue maakt er dus dit van:
+
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    ...
+    <span>10</span>
+
+Alles wat binnen `{{` staat wordt door Vue gezien als code, dus niet als HTML. Voor meer informatie, zie: https://vuejs.org/guide/essentials/list.html.
+
+De bovenstaande gele cirkels worden op dit moment als volgt getekend:
+
+    <circle cx=50 cy=50 fill=orange r=20 />
+    <circle cx=150 cy=50 fill=orange r=5 />
+    <circle cx=250 cy=50 fill=orange r=10 />
+    <circle cx=350 cy=50 fill=orange r=30 />
+    <circle cx=450 cy=50 fill=orange r=15 />
+
+Voor het gemak van deze oefening zetten we eerst de straal van elk van deze cirkels gelijk:
+
+    <circle cx=50 cy=50 fill=orange r=15 />
+    <circle cx=150 cy=50 fill=orange r=15 />
+    <circle cx=250 cy=50 fill=orange r=15 />
+    <circle cx=350 cy=50 fill=orange r=15 />
+    <circle cx=450 cy=50 fill=orange r=15 />
+
+`cy` is altijd 50. `r` is altijd 15. `fill` is altijd `orange`. Maar `cx` verschilt per cirkel. We zouden die `cx` kunnen herschrijven als
+
+    50 + (n-1) * 100
+
+Waarbij `n` begint bij 1 en dan oploopt. Dat geeft:
+
+    50 + (1-1) * 100 = 50 + 0 * 100 = 50
+
+Voor de eerste cirkel, en voor de  rest:
+
+    50 + (2-1) * 100 = 50 + 1 * 100 = 150
+    50 + (3-1) * 100 = 50 + 2 * 100 = 250
+    ...
+
+Dat kunnen we vertalen naar een `v-for`! Maak ook gebruik van een `g` element voor je `v-for`. De oplossing staat hieronder, maar probeer zeker eerst zelf.
+
+    <svg width=700 height=350>
+      <g v-for="n in 5">
+        <circle :cx="n*100" cy=50 r=15 fill="orange" />
+      </g>
+    </svg>
+
+Het zou kunnen dat je de volgende fout tegenkomt: 
+
+    Elements in iteration expect to have 'v-bind:key'
+
+De uitleg voor deze fout is erg technisch maar het komt erop neer dat vue een unieke sleutel nodig heeft voor elke iteratie (elke n). Je kan dat sterk vergelijken met de primary key die je kent van relationele databases. Uiteraard is elke n al uniek, want elke n is in elke iteratie een ander getal, maar vue kan die redenering niet maken. We kunnen vue wat helpen door de volgende toevoeging:
+
+    <svg width=700 height=350>
+      <g v-for="n in 5" :key="n">
+        <circle :cx="n*100" cy=50 r=15 fill="orange" />
+      </g>
+    </svg>
+
+In dit geval is de key evident: n is in elke iteratie verschillend. Maar typisch itereren we over objecten, en dan is het vaak niet zo simpel voor Vue om te weten wat de unieke identifier is van elk object.
+
+Als je moeite hebt met for-lussen, raad ik je altijd aan om die zelf eens uit te schrijven. Met andere woorden: speel zelf eens Vue: verwijder de for-lus en schrijf elke iteratie manueel neer, zo krijg je inzicht in de werking van de for-lus.
 
 ## 3. Smiley
 
@@ -250,27 +316,31 @@ Probeer nu eens de smiley 3x te herhalen:
     </g>
 </svg>
 
-Hoe doe je dat? Als je het goed hebt, dan heb je de smiley 3x gekopieerd en enkel de x-coördinaat aangepast. Maar wat is de smiley in dit geval? Dat is het `g` element, en de x- en y-coördinaat van de smiley staat in de transform eigenschap van die groep. Dit is de code van bovenstaand voorbeeld (met kleinere afmetingen):
+Doe dat eerst manueel. Maak daarna gebruik van een `v-for` lus. Let op: De x- en y-coordinaat staat op dit moment binnen onze transform eigenschap:
 
-    <svg width=300 height=100>
-        <g transform="translate(50, 50)">
+    <g transform="translate(50, 50)">
+
+Helaas is het niet voldoende om dit te doen:
+
+    <g v-bind:transform="translate(50 + n *100, cy)">
+
+Als `n` onze lusvariabele is. (De `v-bind:` is nodig om vue te laten weten dat we in dit attribuut code hebben gestoken. Je kan die, zoals in het vorige voorbeeld ook afkorten tot `:`).
+
+De waarde van transform is namelijk een string: `'translate(50, 50)'`. Als we daar rechtstreeks n inzetten wordt die geinterpreteerd als tekst. We gaan daarom de tekst opdelen. In javascript kan je tekst 'optellen' om die aan elkaar te hangen. Dus `'translate(150, 50)'` is hetzelfde als `'translate(' + '150, 50)'` of `'translate(' + 480 + ', ' + 250 + ')'`. Om de interpretatie als tekst te mijden schrijven we dus: `'translate(' + (50 + n * 100) + ', 50')'`. Je kan ook gebruik maken van javascript template literals voor kortere notate (zie: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). Dat ziet er dan zo uit:
+
+    <g :transform="`translate(${50 + n *100}, 50)`">
+
+Wat is nu de smiley in dit geval? Dat is het `g` element, en de x- en y-coördinaat van de smiley staat in de transform eigenschap van die groep. Dit is de code van bovenstaand voorbeeld (met `v-for`):
+
+    <svg width=700 height=350>
+      <g v-for="n in 3" :key="n">
+        <g :transform="`translate(${50 + (n-1) *100}, 50)`">
             <circle r=45 fill=yellow stroke=black stroke-width=3>
             </circle>
-            <circle cx=-20 cy=-10 r=8 fill=black />
-            <circle cx=20 cy=-10 r=8 fill=black />
+              <circle cx=-20 cy=-10 r=8 fill=black />
+              <circle cx=20 cy=-10 r=8 fill=black />
         </g>
-        <g transform="translate(150, 50)">
-            <circle r=45 fill=yellow stroke=black stroke-width=3>
-            </circle>
-            <circle cx=-20 cy=-10 r=8 fill=black />
-            <circle cx=20 cy=-10 r=8 fill=black />
-        </g>
-        <g transform="translate(250, 50)">
-            <circle r=45 fill=yellow stroke=black stroke-width=3>
-            </circle>
-            <circle cx=-20 cy=-10 r=8 fill=black />
-            <circle cx=20 cy=-10 r=8 fill=black />
-        </g>
+      </g>
     </svg>
 
 En wat als ik nu een kleine smiley will, een middelgrote en een grote? Probeer zelf eens te spelen met de waardes om dat voor elkaar te krijgen.
@@ -296,16 +366,23 @@ En wat als ik nu een kleine smiley will, een middelgrote en een grote? Probeer z
     </g>
 </svg>
 
-Je zal al snel merken dat dat minder praktisch is. Waarom zijn we dit aan het doen? Omdat we graag SVG elementen willen aanpassen op basis van data die we inlezen. Denk bijvoorbeeld aan een bar-chart waarbij we rechthoeken hoger of korter maken op basis van data. In datavisualisatie werken we dus vaak met dezelfde SVG elemenen die we willen aanpassen met kleine waardes. We hebben een framework dat ons daarbij kan helpen: Vue.
+Waarom zijn we dit aan het doen? Omdat we graag SVG elementen willen aanpassen op basis van data die we inlezen. Denk bijvoorbeeld aan een bar-chart waarbij we rechthoeken hoger of korter maken op basis van data. In datavisualisatie werken we dus vaak met dezelfde SVG elemenen die we willen aanpassen met kleine waardes. We hebben gelukkig een framework dat ons daarbij kan helpen: Vue.
 
 ## 4. Vue Componenten
-
 Met Vue kunnen we eigen html-componenten definiëren. Dat betekent dat we eigenlijk willen dat onze html er ruwweg als volgt uiziet:
 
     <svg>
         <face> ... </face>
         <face> ... </face>
         <face> ... </face>
+    </svg>
+
+of:
+
+    <svg>
+        <g v-for="...">
+            <face>...</face>
+        </g>
     </svg>
 
 idealiter kunnen we dan ook nog eigenschappen meegeven om de gezichtjes onderling aanpasbaar te maken:
@@ -324,11 +401,11 @@ Maak in de map components een nieuw bestandje aan: `Face.vue`. Als je kijkt naar
 Er zijn er nog meer dan dat en we hebben ze niet allemaal nodig. Onder template staat de html voor de component. We kunnen daar dus de html copy-pasten van onze smiley (vergeet die wel niet tussen de `template` tags te steken):
 
     <template>
-        <g transform="translate(480, 250)">
-            <circle r=245 fill=yellow stroke=black stroke-width=10>
+        <g transform="translate(150, 50)">
+            <circle r=45 fill=yellow stroke=black stroke-width=3>
             </circle>
-            <circle cx=-130 cy=-100 r=40 fill=black />
-            <circle cx=130 cy=-100 r=40 fill=black />
+            <circle cx=-20 cy=-10 r=8 fill=black />
+            <circle cx=20 cy=-10 r=8 fill=black />
         </g>
     </template>
 
@@ -344,6 +421,8 @@ Daaronder zetten we nog het volgende:
     </script>
 
 Wat doet dit nu eigenlijk? De `script` tags herken je wellicht van javascript en dit is de eigenlijke Vue-code die de html tussen de `template` tags staat blootstelt aan de rest van het project en hangt daar een naampje aan: `Face`.
+
+Het laatste onderdeel, `style` laten we voorlopig nog even met rust.
 
 Alles wat we nu gedaan hebben heeft geen enkele invloed op onze webpagina. Dat komt omdat alle html code voor onze pagina nog steeds in `App.vue` staat. Tijd om onze gloednieuwe `Face` component te gebruiken. 
 
@@ -373,7 +452,12 @@ We zien dat er dus 2 zaken nodig zijn om de `Face` component te kunnen gebruiken
     }
     </script>
 
-Dat zijn al veel aanpassingen zonder te testen... Dus laat ons nog 1 kleine aanpassing maken zodat we de impact kunnen zien, en het is de beste aanpassing: we gaan de html in App.vue aanpassen zodat daar ons nieuwe Face element gebruikt wordt:
+Dat zijn al veel aanpassingen zonder te testen... Maar als je nu probeert te runnen krijg je de volgende errorr:
+
+    The "Face" component has been registered but not used  vue/no-unused-components
+
+Vue vindt het niet zo leuk als je componenten declareert maar dan uiteindelijk niet gebruikt. Dat is overigens een instelling die je kan wijzigen, maar dit ligt buiten de scope van dit vak.
+Laat ons dus nog 1 kleine aanpassing maken zodat we de impact kunnen zien, en het is de beste aanpassing: we gaan de html in App.vue aanpassen zodat daar ons nieuwe Face element gebruikt wordt:
 
     <template>
     <div id="app">
@@ -383,7 +467,7 @@ Dat zijn al veel aanpassingen zonder te testen... Dus laat ons nog 1 kleine aanp
     </div>
     </template>
 
-Run opnieuw je project en je zal zien dat je nog steeds een smiley hebt. Misschien is dat niet zo spannend voor de doorsnee gebruiker, maar wij weten beter. De html maakt nu gebruik van een html element dat we zelf gedefinieerd hebben.
+Run opnieuw je project en je zal zien dat je nog steeds een smiley hebt. Misschien is dat niet zo spannend voor de doorsnee gebruiker, maar wij weten beter. De html maakt nu gebruik van een html element dat we zelf gedefinieerd hebben!
 
 ## 5. Componenten & Data
 
@@ -400,14 +484,14 @@ We zijn al een stap verder! We hebben nu een eigen html element. Helaas kunnen w
     </template>
 
 ### Coordinaten
-We zouden dus graag data doorgeven aan ons html element: de x-coordinaat van het gezicht. Het eerste wat we moeten doen is de code van onze Face component uitbreiden zodat die ook `props`, oftewel properties, blootstelt:
+Aan een cirkel element konden we data doorgeven zoals `cx` en `fill`. Waarom zouden we dat ook niet kunnen voor ons eigen elementje? We zouden dus graag data doorgeven aan ons html element: de x-coordinaat van het gezicht. Het eerste wat we moeten doen is de code van onze Face component uitbreiden zodat die ook `props`, oftewel properties, blootstelt:
 
     <script>
     export default {
     name: 'Face',
     props: {
-        'cx': Number,
-        'cy': Number
+        'x': Number,
+        'y': Number
     },
     components: {
         
@@ -419,42 +503,44 @@ Dit zorgt ervoor dat ons html element 2 eigenschappen heeft (van het type Number
 
     <template>
     <div id="app">
-        <svg width=960 height=500>
-            <Face cx=480 cy=250 />  
+        <svg width=700 height=350>
+            <Face x=100 y=100 />
         </svg>
     </div>
     </template>
 
-Helaas werkt dit niet. Vue heeft wat hulp nodig en moet weten welke eigenschappen doorgegeven moeten worden aan componenten. We moeten daarvoor een Vue directive toevoegen, dat is dus wat extra boekhouding. Gelukkig is dat heel simpel om te doen: we marken de eigenschappen met `v-bind:`.
+We zijn hier iets vergeten. Vue heeft wat hulp nodig en moet weten welke eigenschappen doorgegeven moeten worden aan componenten. We moeten daarvoor een Vue directive toevoegen, dat is dus wat extra boekhouding. Gelukkig is dat heel simpel om te doen: we marken de eigenschappen met `v-bind:`.
 
     <template>
     <div id="app">
-        <svg width=960 height=500>
-        <Face v-bind:cx=480 v-bind:cy=250 />  
+        <svg width=700 height=350>
+            <Face v-bind:x=100 v-bind:y=100 /> 
         </svg>
     </div>
     </template>
 
-Wat doet dit nu? Helemaal niets. We gebruik die properties namelijk nergens binnen ons Face element. Laat ons dat even aanpassen. De x- en y-coordinaat staat op dit moment binnen onze transform eigenschap:
+Helaas werkt dit niet. Weet je ook waarom?
 
-    <g transform="translate(480, 250)">
+De html van ons `Face` componentje is nog altijd dezelfde. We maken nergens gebruik van de `x` en `y` eigenschappen die we hebben gedeclareerd. Met andere woorden: we hebben nu wel een `x` en `y` gegeven aan onze component, maar we hebben nog niet duidelijk gemaakt hier die eigenschappen de html van `Face` zullen beinvloeden. Laat ons dat even aanpassen. De x- en y-coordinaat staat op dit moment binnen onze transform eigenschap:
+
+    <g transform="translate(150, 50)">
 
 Helaas is het niet voldoende om dit te doen:
 
-    <g transform="translate(cx, cy)">
+    <g transform="translate(x, y)">
 
-De waarde van transform is namelijk een string: `'translate(480, 250)'`. Als we daar rechtstreeks cx en cy inzetten worden die geinterpreteerd als tekst. We gaan daarom de tekst opdelen. In javascript kan je tet 'optellen' om die aan elkaar te hangen. Dus `'translate(480, 250)'` is hetzelfde als `'translate(' + '480, 250)'` of `'translate(' + 480 + ', ' + 250 + ')'`. Om de interpretatie als tekst te mijden schrijven we dus: `'translate(' + cx + ', ' + cy + ')'`:
+Weet je nog waarom? Probeer weer eerst even zelf. De oplossing staat hieronder:
 
     <template>
-        <g v-bind:transform="'translate(' + cx + ', ' + cy + ')'">
-            <circle r=245 fill=yellow stroke=black stroke-width=10>
+        <g :transform="`translate(${x}, ${y})`">
+            <circle r=45 fill=yellow stroke=black stroke-width=3>
             </circle>
-            <circle cx=-130 cy=-100 r=40 fill=black />
-            <circle cx=130 cy=-100 r=40 fill=black />
+            <circle cx=-20 cy=-10 r=8 fill=black />
+            <circle cx=20 cy=-10 r=8 fill=black />
         </g>
     </template>
 
-Merk op dat hier ook de `v-bind:` directive gebruikt moet worden.
+Vergeet niet de `:` of `v-bind:` voor de transform.
 
 ### Andere properties
 
@@ -464,8 +550,8 @@ Tijd om een versnelling hoger te schakelen. We gaan nog extra properties toevoeg
     export default {
     name: 'Face',
     props: {
-        'cx': Number,
-        'cy': Number,
+        'x': Number,
+        'y': Number,
         'r': Number,
         'strokeWidth': Number,
         'eyeOffsetX': Number,
@@ -481,76 +567,58 @@ Tijd om een versnelling hoger te schakelen. We gaan nog extra properties toevoeg
 We gebruiken die properties ook op de gepaste manier in de html van onze Face-component:
 
     <template>
-        <g v-bind:transform="'translate(' + cx + ', ' + cy + ')'">
-            <circle v-bind:r=r fill=yellow stroke=black v-bind:stroke-width=strokeWidth>
+        <g :transform="`translate(${x}, ${y})`">
+            <circle :r=r fill=yellow stroke=black :stroke-width=stroke-width>
             </circle>
-            <circle v-bind:cx=-eyeOffsetX v-bind:cy=-eyeOffsetY v-bind:r=eyeRadius fill=black />
-            <circle v-bind:cx=eyeOffsetX v-bind:cy=-eyeOffsetY v-bind:r=eyeRadius fill=black />
+            <circle :cx=-eyeOffsetX :cy=-eyeOffsetY :r=eyeRadius fill=black />
+            <circle :cx=eyeOffsetX :cy=-eyeOffsetY :r=eyeRadius fill=black />
         </g>
     </template>
+
+Let opnieuw op de `:`!
 
 Ten slotte geven we de correcte waardes door vanaf `App.vue`:
 
     <template>
     <div id="app">
-        <svg width=960 height=500>
+        <svg width=700 height=350>
         <Face 
-            v-bind:cx=100 
-            v-bind:cy=75 
-            v-bind:r=50 
-            v-bind:eye-offset-x=20 
-            v-bind:eye-offset-y=10 
-            v-bind:eye-radius=10
-            v-bind:stroke-width=5 
-        />  
+            v-bind:x=50 
+            v-bind:y=150
+            v-bind:stroke-width=3
+            v-bind:eyeOffsetX=20
+            v-bind:eyeOffsetY=10
+            v-bind:eyeRadius=8
+            v-bind:r=45
+            /> 
         </svg>
     </div>
     </template>
 
-We kunnen nu gemakkelijker bijvoorbeeld 3 gezichten naast elkaar zetten:
+Hier gebruiken we opnieuw `v-bind` in de plaats van `:`. Denk eraan dat je die uitwisselbaar kan gebruiken, dus `:` was even goed.
 
-    <template>
-    <div id="app">
-        <svg width=960 height=500>
-        <Face 
-            v-bind:cx=100 
-            v-bind:cy=75 
-            v-bind:r=50 
-            v-bind:eye-offset-x=20 
-            v-bind:eye-offset-y=10 
-            v-bind:eye-radius=10
-            v-bind:stroke-width=5 
-        />  
-        <Face 
-            v-bind:cx=250 
-            v-bind:cy=75 
-            v-bind:r=50 
-            v-bind:eye-offset-x=20 
-            v-bind:eye-offset-y=10 
-            v-bind:eye-radius=10
-            v-bind:stroke-width=5 
-        />  
-        <Face 
-            v-bind:cx=400 
-            v-bind:cy=75 
-            v-bind:r=50 
-            v-bind:eye-offset-x=20 
-            v-bind:eye-offset-y=10 
-            v-bind:eye-radius=10
-            v-bind:stroke-width=5 
-        />  
-        </svg>
-    </div>
-    </template>
+We kunnen nu gemakkelijker bijvoorbeeld 3 gezichten naast elkaar zetten. Probeer het eerst zo. Maak daarna gebruik van een `v-for`. De oplossing met `v-for` vind je hieronder, maar probeer eerst zelf.
 
-Er zijn een aantal zaken waar je hier voor moet oppassen:
-- De namen van de props schrijven we in camel case, dus bijvoorbeel `eyeOffsetX`. Als we de property effectief binden (in `App.vue`), dan gebruiken we de notatie met liggende streepjes (kebab-case): `eye-offset-x`. Dat is wat vervelend en iets waar je voor moet uitkijken.
-- Je kan een property binnen je component gebruiken als volgt: `cx=-eyeOffsetX` maar je kan die eveneens tussen " zetten: `cx="-eyeOffsetX"`. Nu komt de verwarring: we hadden toch net moeite met die " bij het gebruik van transform. Dat komt omdat transform een string verwacht en vue ook net graag die " voor expressies. Zo kan je bijvoorbeeld schrijven: `cx="50 + eyeOffsetX/2"`. Dat conflicteert soms, zoals het geval is bij de transform, en dan moeten we andere oplossingen zoeken zoals de string opdelen.
+
+    <svg width=700 height=350>
+      <g v-for="n in 3" :key="n">
+        <Face 
+          v-bind:x="50 + (n-1) * 100"
+          v-bind:y=150
+          v-bind:stroke-width=3
+          v-bind:eyeOffsetX=20
+          v-bind:eyeOffsetY=10
+          v-bind:eyeRadius=8
+          v-bind:r=45
+          />
+      </g>
+    </svg>
+
+Let op:
+Je kan een property binnen je component gebruiken als volgt: `cx=-eyeOffsetX` maar je kan die eveneens tussen `""` zetten: `cx="-eyeOffsetX"`. Nu komt de verwarring: we hadden toch net moeite met die `""` bij het gebruik van transform? Dat komt omdat transform een string verwacht en vue ook net graag die " voor expressies. Zo kan je bijvoorbeeld schrijven: `cx="50 + eyeOffsetX/2"`. Dat conflicteert soms, zoals het geval is bij de transform, en dan moeten we andere oplossingen zoeken zoals de string opdelen.
 
 ## 6. Uitdaging
 Probeer hier nu een paar stapjes in verder te gaan. 
 
 - Begin eens met het toevoegen van een `Eye` component die dan gebruikt wordt door de `Face` component die we gemaakt hebben.
-- Maak een rij van gezichtjes, allemaal met een andere afmetingen en oogjes.
-
-
+- Maak een rij van gezichtjes, allemaal met een andere afmetingen en oogjes, met behulp van een `v-for`.
