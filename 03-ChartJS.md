@@ -53,7 +53,7 @@ We kunnen ook een bepaalde set uitzetten, hier zetten we onze dataset uit:
     myGraph.update();
 
 ## Interactiviteit - knop
-We voegen een knop toe aan onze HTML:
+Dit stuk is niet specifiek voor Chart.js, maar opfrissing voor wat we nodig hebben voor de oefening hieronder. We voegen een knop toe aan onze HTML:
 
     <button id="refreshDataButton">Refresh Data</button>
 
