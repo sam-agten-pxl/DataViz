@@ -1,56 +1,200 @@
 # Lab 03
 In dit lab gaan we nog wat dieper in op enkele aspecten van Chart.js. Merk ook op dat we in dit lab niet altijd de volledige code zullen tonen om het kort te houden. We kunnen bijvoorbeeld enkel het data object van een grafiek tonen, het is aan jou om te weten waar deze code thuishoort!
 
-## Interactiviteit - basis
-Zodra onze grafiek getekend is kunnen we die ook nog wijzigen. Ter opfrissing, hier was onze Pie Chart:
+## Andere Datastructuren
+Tot nu toe hebben we een lijngrafiek als volgt getekend:
 
+    const cfg = {
+    type: 'line',
     data: {
-        labels: data.map(r => r.label), 
-        datasets:[
-            {
+        labels: ['A', 'B', 'C'],
+        datasets: [{
+        data: [10, 15, 20],
+        }]
+    }
+    }
+
+We kunnen de labels ook weglaten en rechtstreeks meegeven met de data. In dat geval is elk punt ook een array. Dus in dit geval niet 10, 15 en 20, maar wel [A, 10], [B, 15] en [C, 20]:
+
+    const cfg = {
+    type: 'line',
+    data: {
+        datasets: [{
+        data: [["A", 10], ["B", 15], ["C", 20]],
+        }]
+    }
+    }
+
+Nog beter: je kan er ook javascript object van maken. Dus in de plaats van [A, 10] verduidelijken we als tot {x:A, y:10}. Dat geeft dan:
+
+    const cfg = {
+    type: 'line',
+    data: {
+        datasets: [{
+        data: [{x:"A", y:10}, {x:"B", y:15}, {x:"C", y:20}],
+        }]
+    }
+    }
+
+Veel vaker werken we met object die we inlezen van bestanden (zie Lab 04), en krijgen we niet object die netjes zeggen wat er op de x-as moet en op de y-as, maar hebben die vaker beschrijvende eigenschapsnamen. Bijvoorbeeld:
+
+    {
+        day: 'Mon', 
+        steps: 5423,
+    }
+
+Zoals uit deze stappentellerdata, bijvoorbeeld:
+
+    const stepsData = [
+        { day: "Mon", steps: 5423 },
+        { day: "Tue", steps: 6345 },
+        { day: "Wed", steps: 7120 },
+        { day: "Thu", steps: 6890 },
+        { day: "Fri", steps: 8002 },
+        { day: "Sat", steps: 10543 },
+        { day: "Sun", steps: 9340 }
+    ];
+
+We kunnen deze data rechtstreeks meegeven aan onze grafiek, zonder dat we opnieuw de `map` functie moeten gebruiken:
+
+    const cfg = {
+        type: 'line',
+        data: {
+            datasets: [{
+            data: stepsData,
+            }]
+        }
+    }
+
+Dit werkt helaas niet, omdat Chart.js op zoek is naar de eigenschappen `x` en `y`, die hier niet bestaan. We kunnen echter meegeven naar welke eigenschappen er gezocht moet worden met behulp van het `options` object:
+
+    const cfg = {
+        type: 'line',
+        data: {
+            datasets: [{
+            data: stepsData,
+            }]
+        },
+        options: {
+            parsing: {
+                xAxisKey: 'day',
+                yAxisKey: 'steps'
+            }
+        } 
+    }
+
+Je kan de parsing methode ook rechtstreeks in het data object zetten:
+
+    const cfg = {
+        type: 'line',
+        data: {
+            datasets: [{
+            data: stepsData,
+            parsing: {
+                xAxisKey: 'day',
+                yAxisKey: 'steps'
+            }
+            }]
+        },
+    }
+
+Vanaf nu verkiezen we deze werkwijze.
+
+Voor taartdiagrammen moeten we nog steeds een array van labels voorzien en spreken we bij de parsing van een `key` in de plaats van `xAxisKey` en `yAxisKey`:
+
+    const cfg = {
+    type: 'pie',
+    data: {
+        labels: fruit.map(r => r.label),
+        datasets: [{
                 label: 'Value',
-                data: data.map(r => r.sales),
-                backgroundColor: data.map(r => r.color),
+                data: fruit,
+                parsing : {
+                    key: 'sales',
+                },
+                backgroundColor: fruit.map(r => r.color),
                 borderWidth: 1
             }
         ]
     },
+    }
 
-En hier is het data object dat we gebruikt hebben:
+En hier nog eens de data die we in dit voorbeeld gebruikt hebben:
 
-    const data = [
+    const fruit = [
         {label: 'Apples', sales: 10, color: 'rgba(255, 99, 132)'},
         {label: 'Bananas', sales: 14, color: 'rgba(255, 206, 86)'},
         {label: 'Cherries', sales: 7, color: 'rgba(54, 162, 235)'},
     ];
 
+## Oefening: Fitnessdata
+We gaan onze kennis nog eens oefenen. Gebruik de volgende data:
+
+    const fitnessData = [
+        { day: "Mon", steps: 5400, calories: 220 },
+        { day: "Tue", steps: 6800, calories: 260 },
+        { day: "Wed", steps: 7200, calories: 280 },
+        { day: "Thu", steps: 6100, calories: 240 },
+        { day: "Fri", steps: 8900, calories: 310 },
+        { day: "Sat", steps: 12000, calories: 420 },
+        { day: "Sun", steps: 10200, calories: 380 }
+    ];
+
+✅ Maak een grafiek die zowel de stappen als de calorieën weergeeft. Voor de stappen gebruik je een `bar` chart en voor de calorieën een `line`. Je kan het type van grafiek mee in de dataset zetten zodat je beide grafieken samen kan tekenen, je tekent dus 2 datasets op 1 grafiek. Gebruik de methode die we zonet gezien hebben, dus vermijdt het gebruik van `map`. Zorg er bovendien voor dat:
+
+- De kleur van de bar chart is rgb(54, 162, 235, 0.6)
+- De kleur van de lijn is blauw
+- De lijn is tevens een stippellijn.
+- Zorg dat de lijndikte 1 is.
+
+Gebruik ook het volgende options object voor je grafiek:
+
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true, title: { display: true, text: "Steps" } },
+            y1: {
+                beginAtZero: true,
+                position: "right",
+                grid: { drawOnChartArea: false },
+                title: { display: true, text: "Calories" }
+            }
+        }
+    }
+
+En voeg de volgende eigenschap toe aan je lijn-dataset: 
+
+    yAxisID: "y1",
+
+De oplossing vind je als oplossing 1, vanonder aan dit document.
+
+## Interactiviteit - basis
+Zodra onze grafiek getekend is kunnen we die ook nog wijzigen. We werken even verder op het taartdiagramme.
 We kunnen onze data wijzigen en onze grafiek laten aanpassen. Daarvoor moeten we uiteraard wel een referentie bijhouden naar onze grafiek zodat we er opnieuw naar kunnen verwijzen. Dus bij het aanmaken van onze grafiek:
 
-    const myGraph = new Chart(...)
+    const pie = new Chart(ctx, cfg);
 
 We wijzigen na het maken van onze grafiek onze data:
 
-    data.push( { label: "Blueberries", sales: 15, color: 'rgba(86, 255, 132'});
+    fruit.push( { label: "Blueberries", sales: 15, color: 'rgba(86, 255, 132'});
 
 Daarna gebruiken de `update` functie van Chart.js om onze grafiek aan te passen maar eerst moeten we natuurlijk deze aangepaste data opnieuw voederen aan onze grafiek:
 
-    myGraph.data.labels = data.map(r => r.label);
-    myGraph.data.datasets[0].data = data.map(r => r.sales);
-    myGraph.data.datasets[0].backgroundColor = data.map(r => r.color);
-    myGraph.update();
+    pie.data.labels = fruit.map(r => r.label);
+    pie.data.datasets[0].backgroundColor = fruit.map(r => r.color);
+    pie.update();
 
 We kunnen ook een bepaalde set uitzetten, hier zetten we onze dataset uit:
 
-    myGraph.setDatasetVisibility(0, false);
-    myGraph.update();
+    pie.setDatasetVisibility(0, false);
+    pie.update();
 
-    
-✅ Zoek zelf eens uit hoe je een specifiek datapunt kan uitzetten vanuit code. Zet appels uit. De oplossing vind je onderaan als oplossing 1.
+✅ Zoek zelf eens uit hoe je een specifiek datapunt kan uitzetten vanuit code. Zet appels uit. De oplossing vind je onderaan als oplossing 2.
 
  We kunnen ook onze options aanpassen:
 
-    myGraph.options.plugins.legend.position = 'right';
-    myGraph.update();
+    pie.options.plugins.legend.position = 'right';
+    pie.update();
 
 ## Interactiviteit - knop
 Dit stuk is niet specifiek voor Chart.js, maar opfrissing voor wat we nodig hebben voor de oefening hieronder. We voegen een knop toe aan onze HTML:
@@ -79,7 +223,7 @@ Genoeg taartdiagrammes en tijd om alles nog eens bij elkaar te gooien! Probeer d
 
 ✅ Maak een lijn diagramme. Gebruik de volgende data:
 
-Zoek zelf eens uit hoe je een specifiek datapunt kan uitzetten vanuit code. Zet appels uit. De oplossing vind je onderaan als oplossing 1.
+Zoek zelf eens uit hoe je een specifiek datapunt kan uitzetten vanuit code. Zet appels uit. De oplossing vind je onderaan als oplossing 3.
 We gaan een lijndiagramme maken. Gebruik opnieuw de volgende data
 
 | Month | **Sales** |
@@ -97,12 +241,58 @@ We gaan een lijndiagramme maken. Gebruik opnieuw de volgende data
 | Nov   | 25,000                |
 | Dec   | 30,000                |
 
-✅ Voeg een knop toe. Als je op de knop klikt krijg je voor elke maand een willekeurig cijfer tussen 10 000 en 30 000. Je kan daarvoor `Math.random()` gebruiken (Oplossing 3).
-✅ Pas de oefening aan, zorg nu dat de data vanzelf om de 3 seconden wordt geupdatet. Gebruik je beste google-fu of prompt engineering! Maar zorg ervoor dat je oplossing snapt! (Oplossing 4)
+✅ Voeg een knop toe. Als je op de knop klikt krijg je voor elke maand een willekeurig cijfer tussen 10 000 en 30 000. Je kan daarvoor `Math.random()` gebruiken (Oplossing 4).
+✅ Pas de oefening aan, zorg nu dat de data vanzelf om de 3 seconden wordt geupdatet. Gebruik je beste google-fu of prompt engineering! Maar zorg ervoor dat je oplossing snapt! (Oplossing 5)
 
 # Oplossingen
 
 ### Oplossing 1
+    const cfg = {
+        data: {
+            datasets: [{
+                type: 'bar',
+                label: 'Steps',
+                data: fitnessData,
+                borderColor: 'rgba(54, 162, 235, 0.6)',
+                parsing: 
+                {
+                    xAxisKey: 'day',
+                    yAxisKey: 'steps'
+                }
+            },
+            {
+                label: 'Calories',
+                type: 'line',
+                data: fitnessData,
+                borderColor: 'rgb(0, 0 ,255)',
+                borderWidth: 1,
+                borderDash: [5, 5],
+                yAxisID: "y1",
+                parsing: 
+                {
+                    xAxisKey: 'day',
+                    yAxisKey: 'calories'
+                }
+            }
+            ]
+        },
+    
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: "Steps" } },
+                y1: {
+                    beginAtZero: true,
+                    position: "right",
+                    grid: { drawOnChartArea: false },
+                    title: { display: true, text: "Calories" }
+                }
+            }
+        }
+    }
+    
+
+### Oplossing 2
 Wil je gewoon een datapunt uitzetten, dat kan zo:
 
     myGraph.toggleDataVisibility(0, false);
@@ -110,7 +300,7 @@ Wil je gewoon een datapunt uitzetten, dat kan zo:
 
 Hier zetten we de appels uit.
 
-### Oplossing 2
+### Oplossing 3
 
     function refreshData()
     {
@@ -122,7 +312,7 @@ Hier zetten we de appels uit.
         console.log("Refresh data");
     }
 
-### Oplossing 3
+### Oplossing 4
 
 
     import Chart from 'chart.js/auto';
@@ -180,7 +370,7 @@ Hier zetten we de appels uit.
         myGraph.update();
     }
 
-### Oplossing 4
+### Oplossing 5
 
 Hiervoor kan je simpelweg `setInterval` gebruiken. Die functie verwacht 2 soorten input: de functie die periodiek opgeroepen moet worden, en de tijd die tussen elke oproep moet zitten, in milliseconden. 3 seconden is 3000ms dus je kan deze regel toevoeg aan je JS:
 

@@ -139,10 +139,22 @@ Op dit moment roepen we de code nog niet op, dus laat ons dat eens proberen:
 ## API
 API staat voor Application Programming Interface en is een zeer brede term voor externe, aanspreekbare punten die je kan aanspreken vanuit je code. In principe is Chart.JS een API! Als het over data gaat spreken we vaak over een REST API. Dat gaat specifieker over een URL waar je naartoe kan om data op te halen en zelfs data naar te uploaden. We zullen het vaak in het kort hebben over een API maar in dit vak doelen we dan specifiek op een REST API.
 
-Wil je eens een voorbeeld zien van een zo een 'endpoint' URL waar je data kan afhalen? Hier is er eentje : https://jsonplaceholder.typicode.com/posts.
+Wil je eens een voorbeeld zien van een zo een 'endpoint' URL waar je data kan afhalen? Hier is er eentje : https://jsonplaceholder.typicode.com/posts Of hier: https://api.open-meteo.com/v1/forecast?latitude=40.7&longitude=-74&daily=temperature_2m_max,temperature_2m_min&timezone=auto.
 Elke website die je bezoekt is simpelweg een documentje. Meestal is dat een HTML document maar dat kan dus ook een JSON file zijn zoals hier het geval is. URL staat dan ook voor Uniform Resource Locator, en dat impliceert dat er meer te vinden is op een URL dan enkel maar eenvoudige webpaginas.
+Hoe je die URL opstelt is een kwestie van de documentatie volgen van de api. Zodra je de URL hebt kan je simpelweg opnieuw `fetch` gebruiken:
 
+    const file = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.7&longitude=-74&daily=temperature_2m_max,temperature_2m_min&timezone=auto");
 
+## Huiswerk: Weergegevens
+
+Bestudeer https://open-meteo.com/en/docs. Gebruik `fetch` om de weersvoorspelling op te vragen voor Hasselt voor de komende 7 dagen. Je geeft deze weer in een lijngrafiek waarbij je de hoogste en laagste temperatuur per dag weergeeft. Je tekent dus 2 datasets op 1 grafiek. Vermijdt het gebruik van `map`. Zorg er bovendien voor dat:
+
+- De lijn voor de hoogste temperatuur in het rood is getekend, en die van de lage temperatuur in het blauw.
+- De blauwe lijn is tevens een stippellijn.
+- Zorg dat de lijndikte 1 is voor beide lijnen.
+
+Voorzie 3 knoppen: een knop met Hasselt op, een knop met Berlijn op en een knop met Kaapstad op. Als je op een knop klikt verandert de grafiek om de 7-daagse weersvoorspelling te tonen voor die stad. 
+Indienen doe je via blackboard.
 
 ## Oplossingen
 
@@ -166,36 +178,41 @@ Asynchrone functies kan je op 3 manieren oproepen, de meest simpele manier is he
     import Chart from 'chart.js/auto';
 
     const ctx = document.getElementById('graph-canvas');
-
     async function loadChart()
     {
-        const file = await fetch("sales.json");
-        const data = await file.json();
-        
-        const myGraph = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: data.map(r => r.month), 
-                datasets:[
-                    {
-                        label: 'Sales',
-                        data: data.map(r => r.sales),
-                        borderColor: 'rgb(75, 192, 192)',
-                        borderWidth: 1
+    const file = await fetch("sales.json");
+    const data = await file.json();
+
+    console.log(data);
+    
+    const myGraph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map(r => r.month), 
+            datasets:[
+                {
+                    label: 'Sales',
+                    data: data,
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1,
+                    parsing: {
+                        xAxisKey: 'month',
+                        yAxisKey: 'sales'
                     }
-                ]
-            },
-            options: 
-            {
-                plugins: {
-                    legend: {position: 'bottom'},
-                    } ,
-                    maintainAspectRatio:false, 
-                    responsive: true, 
-                    scales: { y: { beginAtZero: true } 
-                } 
+                }
+            ]
+        },
+        options: 
+        {
+            plugins: {
+                legend: {position: 'bottom'},
+                } ,
+                maintainAspectRatio:false, 
+                responsive: true, 
+                scales: { y: { beginAtZero: true } } 
             }
         });
     }
 
     loadChart();
+    
