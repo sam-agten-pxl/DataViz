@@ -223,9 +223,6 @@ Genoeg taartdiagrammes en tijd om alles nog eens bij elkaar te gooien! Probeer d
 
 ✅ Maak een lijn diagramme. Gebruik de volgende data:
 
-Zoek zelf eens uit hoe je een specifiek datapunt kan uitzetten vanuit code. Zet appels uit. De oplossing vind je onderaan als oplossing 3.
-We gaan een lijndiagramme maken. Gebruik opnieuw de volgende data
-
 | Month | **Sales** |
 | ----- | --------------------- |
 | Jan   | 12,000                |
