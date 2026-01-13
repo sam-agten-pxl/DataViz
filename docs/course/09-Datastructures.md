@@ -289,9 +289,13 @@ Werk voor de oefeningen met onderstaande dataset:
 Genereer de volgende structuren:
 
 ✅ Genereer een array die enkel de `releaseYear` bevat.
+
 ✅ Filter op shows die enkel na 2015 zijn uitgebracht.
+
 ✅ Sorter op `releaseYear`.
+
 ✅ Tel het aantal titels per `rating`.
+
 
 ## Maps
 Ah...maps. Maps zijn een geliefde datastructuur en eentje die D3 vaak terug zal geven als resultaat. Een map is een datastructuur die werkt op basis van key-value pairs. Je zal mogelijks ook de termen HashMap of Dictionary tegenkomen in je carriere, ook dat zijn datastructuren die volgens datzelfde key-value pair principe werken. Maar wat is dat nu precies?
@@ -395,6 +399,7 @@ Sets gedragen zich als arrays met een belangrijk verschil: ze mogen geen duplica
 In bovenstaand voorbeeldje maken we een nieuwe Set en als input geven we al meteen een verzameling mee, een array die enkele getallen bevat. De set zal nu enkel de getallen 1, 2, 3 en 4 bevatten. Sets kunnen ook gecombineerd worden met elkaar om het verschil tussen 2 verzamelingen te krijgen, bijvoorbeeld, of de doorsnede. Je kan ook controleren of een Set een subset is van een andere set, enzovoort. We wijden daar wel niet heel ver over uit in deze cursus omdat Sets in dit vak niet vaak aan bod komen. Voor verdere informatie verwijs ik je graag naar de officiele JS documentatie over Sets. Sets gebruiken we voor deduplicatie, het nagaan of iets een onderdeel is van iets anders of relaties te ontdekken.
 
 ✅ Voor deze oefening ga je zelf wat opzoekingswerk moeten doen en wat meer uitzoeken over hoe je Sets kan gebruiken. Gebruik de volgende 2 datasets:
+
     const usCatalog = [
         { title: "City of Code", type: "Movie" },
         { title: "Data Detectives", type: "TV Show" },
