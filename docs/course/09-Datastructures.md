@@ -316,8 +316,8 @@ We bepalen niet rechtstreeks de index van een element uit de array, dat wordt be
 
 Onze map start als een lege datastructuur. Daarna voegen we twee elementjes toe: 300 en 120. Bij het toevoegen van een element geven we steeds een 'key' mee. Dit is de waarde die je moet gebruiken om het element aan te spreken:
 
-    map["Movie"];       //Dit geeft 300 als resultaat
-    map["TV Show"];     //Dit geeft 120 als resultaat
+    map.get("Movie");       //Dit geeft 300 als resultaat
+    map.get("TV Show");     //Dit geeft 120 als resultaat
 
 We kunnen een map steeds converteren naar een array, maar dan moeten we specifieren wat we willen doen met de key en wat we willen doen met de value:
     
